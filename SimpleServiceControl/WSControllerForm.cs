@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SimpleServiceControl
+namespace SimpleBackupServiceControl
 {
     public partial class WSControllerForm : Form
     {
@@ -28,9 +28,9 @@ namespace SimpleServiceControl
             foreach (ServiceController AvailableService in AvailableServices)
             {
                 //Check the service name for IIS. 
-                if (AvailableService.ServiceName == "SimpleService")
+                if (AvailableService.ServiceName == "SimpleBackupService")
                 {
-                    WSController.ServiceName = "SimpleService";
+                    WSController.ServiceName = "SimpleBackupService";
                     if ( WSController.Status == ServiceControllerStatus.Stopped )
                     {
                         WSController.Start();

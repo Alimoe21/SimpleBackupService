@@ -1,4 +1,4 @@
-﻿namespace SimpleServiceControl
+﻿namespace SimpleBackupService.Control
 {
     partial class Form1
     {

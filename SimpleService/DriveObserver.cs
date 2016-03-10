@@ -6,23 +6,24 @@ using System.Management;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimpleService
+namespace SimpleBackupService
 {
     public class DriveObserver : IDisposable
     {
-        private ManagementEventWatcher insertWatcher;
-
+        private const string wqlQueryString = "SELECT * FROM Win32_VolumeChangeEvent WHERE EventType = 2";
+        private readonly ManagementEventWatcher insertWatcher;
+        
         public event EventHandler<DriveConnectedEventArgs> DriveConnected;
+
+        public DriveObserver ( )
+        {
+            insertWatcher = new ManagementEventWatcher(new WqlEventQuery(wqlQueryString));
+            insertWatcher.EventArrived += DeviceInsertedEvent;
+        }
 
         public void Start ( )
         {
-            WqlEventQuery insertQuery = new WqlEventQuery("SELECT * FROM Win32_VolumeChangeEvent WHERE EventType = 2");
-
-            insertWatcher = new ManagementEventWatcher(insertQuery);
-            insertWatcher.EventArrived += new EventArrivedEventHandler(DeviceInsertedEvent);
             insertWatcher.Start();
-            //var waitForNextEvent = insertWatcher.WaitForNextEvent ( );
-            
         }
 
         private void DeviceInsertedEvent ( object sender, EventArrivedEventArgs e )
@@ -34,6 +35,7 @@ namespace SimpleService
         {
             if (insertWatcher != null)
             {
+                insertWatcher.EventArrived -= DeviceInsertedEvent;
                 insertWatcher.Stop();
                 insertWatcher.Dispose();
             }
