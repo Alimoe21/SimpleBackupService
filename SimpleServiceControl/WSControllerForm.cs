@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SimpleBackupServiceControl
+namespace SimpleBackupService.Control
 {
     public partial class WSControllerForm : Form
     {

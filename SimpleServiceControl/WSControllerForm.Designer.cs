@@ -1,4 +1,4 @@
-﻿namespace SimpleBackupServiceControl
+﻿namespace SimpleBackupService.Control
 {
     partial class WSControllerForm
     {
