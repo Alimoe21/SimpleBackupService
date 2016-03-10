@@ -6,8 +6,8 @@ using System.ServiceProcess;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.SelfHost;
+//using System.Web.Http;
+//using System.Web.Http.SelfHost;
 
 namespace SimpleBackupService
 {
@@ -50,16 +50,16 @@ namespace SimpleBackupService
         {
             Run ( );
 
-            var configuration = new HttpSelfHostConfiguration ( "http://localhost:5000" );
+            //var configuration = new HttpSelfHostConfiguration ( "http://localhost:5000" );
 
-            configuration.Routes.MapHttpRoute (
-                name: "API",
-                routeTemplate: "{controller}/{action}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-                );
+            //configuration.Routes.MapHttpRoute (
+            //    name: "API",
+            //    routeTemplate: "{controller}/{action}/{id}",
+            //    defaults: new { id = RouteParameter.Optional }
+            //    );
 
-            var httpSelfHostServer = new HttpSelfHostServer ( configuration );
-            httpSelfHostServer.OpenAsync ( ).Wait ( );
+            //var httpSelfHostServer = new HttpSelfHostServer ( configuration );
+            //httpSelfHostServer.OpenAsync ( ).Wait ( );
         }
 
         protected override void OnCustomCommand ( int command )

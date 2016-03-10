@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*" Name="SimpleBackupService.Installer" Language="1033" Version="!(bind.FileVersion.SimpleBackupService.exe)" Manufacturer="Pascal Schumann" UpgradeCode="00316c84-6e2c-4c4a-8655-42a9ced464e1">
+		<Package InstallerVersion="200" Compressed="yes" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<!--<MediaTemplate />-->
+
+		<Feature Id="ProductFeature" Title="SimpleBackupService" Level="1">
+			<ComponentRef Id="SimpleBackupService.Service" />
+		</Feature>
+    <Media Id="1" Cabinet="TestService.cab" EmbedCab="yes" />
+
+	<!--<Fragment>-->
+    <!--<ComponentGroup Id="ProductComponents">-->
+    <Directory Id="TARGETDIR"
+                   Name="SourceDir">
+      <Directory Id="INSTALLDIR"
+                 Name="PFiles">
+        <Directory Id="Pascal_Schumann"
+                   Name="Pascal Schumann">
+          <Directory Id="SimpleBackupService"
+                     Name="SimpleBackupService">
+            <Component Id="SimpleBackupService.Service"
+                       Guid="{0A902C5F-93A3-40D5-90F8-70B6373DBE84}">
+              <File Id="SimpleBackupService.exe"
+                    Name="SimpleBackupService.exe"
+                    Source="..\SimpleService\bin\Release\SimpleBackupService.exe"
+                    Vital="yes"
+                    KeyPath="yes"
+                    DiskId="1"/>
+              <!--<File Id="MyProduct.exe.config"
+                    Name="MyProduct.exe.config"
+                    Source="..\MyProduct\bin\Release\MyProduct.exe.config"
+                    Vital="yes"
+                    KeyPath="no"
+                    DiskId="1" />-->
+              <ServiceInstall Id="ServiceInstaller"
+                              Type="ownProcess"
+                              Vital="yes"
+                              Name="SimpleBackupService"
+                              DisplayName="SimpleBackupService"
+                              Description="SimpleBackupService"
+                              Start="auto"
+                              Account="LocalSystem"
+                              ErrorControl="ignore"
+                              Interactive="no" />
+              <ServiceControl Id="StartService"
+                              Start="install"
+                              Stop="both"
+                              Remove="uninstall"
+                              Name="SimpleBackupService"
+                              Wait="yes" />
+            </Component>
+          </Directory>
+        </Directory>
+      </Directory>
+    </Directory>
+    <!--</ComponentGroup>-->
+	<!--</Fragment>-->
+  </Product>
+
+	<!--<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+			--><!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. --><!--
+			--><!-- <Component Id="ProductComponent"> --><!--
+				--><!-- TODO: Insert files, registry keys, and other resources here. --><!--
+			--><!-- </Component> --><!--
+		</ComponentGroup>
+	</Fragment>-->
+</Wix>
