@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleService", "SimpleService\SimpleService.csproj", "{881E0CD8-2281-4EA6-9439-185278BDD5AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleServiceControl", "SimpleServiceControl\SimpleServiceControl.csproj", "{B6F70ADB-C7AF-49F8-A3A5-9E5B7B465428}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{881E0CD8-2281-4EA6-9439-185278BDD5AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{881E0CD8-2281-4EA6-9439-185278BDD5AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{881E0CD8-2281-4EA6-9439-185278BDD5AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{881E0CD8-2281-4EA6-9439-185278BDD5AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6F70ADB-C7AF-49F8-A3A5-9E5B7B465428}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6F70ADB-C7AF-49F8-A3A5-9E5B7B465428}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6F70ADB-C7AF-49F8-A3A5-9E5B7B465428}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6F70ADB-C7AF-49F8-A3A5-9E5B7B465428}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
