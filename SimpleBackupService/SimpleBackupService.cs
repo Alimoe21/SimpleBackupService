@@ -14,6 +14,9 @@ namespace SimpleBackupService
     public class SimpleBackupService : ServiceBase
     {
         private DriveObserver Observer;
+        public Configuration Config;
+        public WebApi WebApi;
+        public Logging Log;
 
         public SimpleBackupService ( )
         {
@@ -25,22 +28,23 @@ namespace SimpleBackupService
 
         public static void Main ( )
         {
-//#if DEBUG
-//            var task = new Task ( ( ) =>
-//            {
-//                var serviceMain = new SimpleBackupService();
-//                serviceMain.Run();
-//                Task.Delay(TimeSpan.MaxValue).Wait();
-//            } );
-//            task.Start();
-//            task.Wait ( );
-//#else
+#if DEBUG
+            var task = new Task ( ( ) =>
+            {
+                var serviceMain = new SimpleBackupService ( );
+                serviceMain.Run ( );
+                Task.Delay ( TimeSpan.MaxValue ).Wait ( );
+            } );
+            task.Start();
+            task.Wait();
+#else
             ServiceBase.Run(new SimpleBackupService());
-//#endif
+#endif
         }
 
         private void Run()
         {
+            ServiceComposition.Compose(this);
             Observer = new DriveObserver();
             Observer.DriveConnected += Observer_DriveConnected;
             Observer.Start();
@@ -49,17 +53,6 @@ namespace SimpleBackupService
         protected override void OnStart ( string [ ] args )
         {
             Run ( );
-
-            //var configuration = new HttpSelfHostConfiguration ( "http://localhost:5000" );
-
-            //configuration.Routes.MapHttpRoute (
-            //    name: "API",
-            //    routeTemplate: "{controller}/{action}/{id}",
-            //    defaults: new { id = RouteParameter.Optional }
-            //    );
-
-            //var httpSelfHostServer = new HttpSelfHostServer ( configuration );
-            //httpSelfHostServer.OpenAsync ( ).Wait ( );
         }
 
         protected override void OnCustomCommand ( int command )
@@ -75,12 +68,13 @@ namespace SimpleBackupService
 
         private void Observer_DriveConnected(object sender, DriveConnectedEventArgs e)
         {
-            EventLog.WriteEntry($"DriveConnected {e.Drive?.Name}");
+            Log.LogDebug($"DriveConnected {e.Drive?.Name}");
+            //EventLog.WriteEntry($"DriveConnected {e.Drive?.Name}");
             if ( e.Drive != null && e.Drive.IsReady)
             {
                 var backupTask = new Task( ( ) =>
                 {
-                    var backupScripts = e.Drive.RootDirectory.GetFiles("backup.bat");
+                    var backupScripts = e.Drive.RootDirectory.GetFiles(Config.BackupScriptName);
                     if (backupScripts.Length > 0)
                     {
                         var backupProcess = new Process
@@ -110,6 +104,10 @@ namespace SimpleBackupService
                 });
                 backupTask.Start();
                 
+            }
+            else
+            {
+                Log.LogDebug("Drive was not ready!");
             }
         }
     }

@@ -1,6 +1,6 @@
 ﻿namespace SimpleBackupService.Control
 {
-    partial class WSControllerForm
+    partial class ConfigForm
     {
         /// <summary>
         /// Required designer variable.
@@ -30,14 +30,13 @@
         {
             this.SuspendLayout();
             // 
-            // WSControllerForm
+            // ConfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 262);
-            this.Name = "WSControllerForm";
-            this.Text = "WSControllerForm";
-            this.Load += new System.EventHandler(this.WSControllerForm_Load);
+            this.Name = "ConfigForm";
+            this.Text = "ConfigForm";
             this.ResumeLayout(false);
 
         }

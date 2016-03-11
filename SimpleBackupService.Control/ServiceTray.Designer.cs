@@ -1,6 +1,6 @@
 ﻿namespace SimpleBackupService.Control
 {
-    partial class Form1
+    partial class ServiceTray
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ServiceTray));
             this.WSNotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.SuspendLayout();
             // 
@@ -39,15 +39,15 @@
             this.WSNotifyIcon.Text = "notifyIcon1";
             this.WSNotifyIcon.Visible = true;
             // 
-            // Form1
+            // ServiceTray
             // 
             this.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(300, 300);
-            this.Name = "Form1";
+            this.Name = "ServiceTray";
             this.ShowInTaskbar = false;
-            this.Text = "Form1";
+            this.Text = "ServiceTray";
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             this.ResumeLayout(false);
 

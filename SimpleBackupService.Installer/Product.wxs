@@ -1,71 +1,133 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="SimpleBackupService.Installer" Language="1033" Version="!(bind.FileVersion.SimpleBackupService.exe)" Manufacturer="Pascal Schumann" UpgradeCode="00316c84-6e2c-4c4a-8655-42a9ced464e1">
+	<Product Id="*" Name="SimpleBackupService" Language="1033" Version="1.0.0.0" Manufacturer="Pascal Schumann" UpgradeCode="00316c84-6e2c-4c4a-8655-42a9ced464e1">
 		<Package InstallerVersion="200" Compressed="yes" />
 
 		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
-		<!--<MediaTemplate />-->
+    <Media Id="1" Cabinet="SimpleBackupService.cab" EmbedCab="yes" />
 
-		<Feature Id="ProductFeature" Title="SimpleBackupService" Level="1">
-			<ComponentRef Id="SimpleBackupService.Service" />
+		<Feature Id="ProductFeature" ConfigurableDirectory="PLATFORMPROGRAMFILESFOLDER.SIMPLEBACKUPSERVICE" Title="SimpleBackupService" Level="1"  Display="expand">
+			<ComponentGroupRef Id="CoreComponents" />
+      <Feature Id="SimpleBackupService.Config" Title="Configuration" Level="4" AllowAdvertise="no">
+        <ComponentGroupRef Id="ConfigComponents" />
+      </Feature>
+      <Feature Id="SimpleBackupService.Logging" Title="Logging" Level="4" AllowAdvertise="no">
+        <ComponentGroupRef Id="LoggingComponents" />
+      </Feature>
+      <Feature Id="SimpleBackupService.Control" Title="Control" Level="4" AllowAdvertise="no">
+        <ComponentGroupRef Id="ControlComponents" />
+      </Feature>
+      <Feature Id="SimpleBackupService.Api" Title="Api" Level="4" AllowAdvertise="no">
+        <ComponentGroupRef Id="ApiComponents" />
+      </Feature>
 		</Feature>
-    <Media Id="1" Cabinet="TestService.cab" EmbedCab="yes" />
-
-	<!--<Fragment>-->
-    <!--<ComponentGroup Id="ProductComponents">-->
-    <Directory Id="TARGETDIR"
-                   Name="SourceDir">
-      <Directory Id="INSTALLDIR"
-                 Name="PFiles">
-        <Directory Id="Pascal_Schumann"
-                   Name="Pascal Schumann">
-          <Directory Id="SimpleBackupService"
-                     Name="SimpleBackupService">
-            <Component Id="SimpleBackupService.Service"
-                       Guid="{0A902C5F-93A3-40D5-90F8-70B6373DBE84}">
-              <File Id="SimpleBackupService.exe"
-                    Name="SimpleBackupService.exe"
-                    Source="..\SimpleService\bin\Release\SimpleBackupService.exe"
-                    Vital="yes"
-                    KeyPath="yes"
-                    DiskId="1"/>
-              <!--<File Id="MyProduct.exe.config"
-                    Name="MyProduct.exe.config"
-                    Source="..\MyProduct\bin\Release\MyProduct.exe.config"
-                    Vital="yes"
-                    KeyPath="no"
-                    DiskId="1" />-->
-              <ServiceInstall Id="ServiceInstaller"
-                              Type="ownProcess"
-                              Vital="yes"
-                              Name="SimpleBackupService"
-                              DisplayName="SimpleBackupService"
-                              Description="SimpleBackupService"
-                              Start="auto"
-                              Account="LocalSystem"
-                              ErrorControl="ignore"
-                              Interactive="no" />
-              <ServiceControl Id="StartService"
-                              Start="install"
-                              Stop="both"
-                              Remove="uninstall"
-                              Name="SimpleBackupService"
-                              Wait="yes" />
-            </Component>
-          </Directory>
+    
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="PLATFORMPROGRAMFILESFOLDER.SIMPLEBACKUPSERVICE" Name="SimpleBackupService">
+          <Component Id="_111821017.EmptyDirectory" Guid="{B5DD92D5-CCD9-4E79-A076-C00F7DEBF36B}">
+            <CreateFolder Directory="PLATFORMPROGRAMFILESFOLDER.SIMPLEBACKUPSERVICE" />
+          </Component>
         </Directory>
       </Directory>
     </Directory>
-    <!--</ComponentGroup>-->
-	<!--</Fragment>-->
+    <UIRef Id="WixUI_FeatureTree" />
   </Product>
-
-	<!--<Fragment>
-		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
-			--><!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. --><!--
-			--><!-- <Component Id="ProductComponent"> --><!--
-				--><!-- TODO: Insert files, registry keys, and other resources here. --><!--
-			--><!-- </Component> --><!--
-		</ComponentGroup>
-	</Fragment>-->
+  <!--Core Components-->
+  <Fragment>
+    <ComponentGroup Id="CoreComponents">
+      <ComponentRef Id="_111821017.EmptyDirectory" />
+      <ComponentRef Id="cmpSimpleBackupService.exe" />
+      <ComponentRef Id="cmpSimpleBackupService.Contracts.dll" />
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <DirectoryRef Id="PLATFORMPROGRAMFILESFOLDER.SIMPLEBACKUPSERVICE">
+      <Component Id="cmpSimpleBackupService.exe" Guid="{E426001A-84BD-456B-9C89-99ABFBB13384}">
+        <File Id="filSimpleBackupService.exe" KeyPath="yes" Source="..\SimpleService\bin\Release\SimpleBackupService.exe" />
+        <ServiceInstall Id="ServiceInstaller" Name="SimpleBackupService" DisplayName="SimpleBackupService" Description="Simple Backup Service" Type='ownProcess' Interactive="no" Start='auto' Vital='yes' ErrorControl='ignore' Account="LocalSystem" />
+        <ServiceControl Id="StartService" Name="SimpleBackupService" Stop='both' Remove='uninstall' Wait='yes' />
+      </Component>
+      <Component Id="cmpSimpleBackupService.Contracts.dll" Guid="{6681ABE8-1ECE-49ED-BD74-06AB8D6D52DD}">
+        <File Id="filSimpleBackupService.Contracts.dll" KeyPath="yes" Source="..\SimpleBackupService.Contracts\bin\Release\SimpleBackupService.Contracts.dll" />
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+  <!--Config Components-->
+  <Fragment>
+    <ComponentGroup Id="ConfigComponents">
+      <ComponentRef Id="cmpSimpleBackupService.Config.dll" />
+      <ComponentRef Id="cmpSimpleBackupService.Config.dll.config" />
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <DirectoryRef Id="PLATFORMPROGRAMFILESFOLDER.SIMPLEBACKUPSERVICE">
+      <Component Id="cmpSimpleBackupService.Config.dll" Guid="{6A873506-B431-4437-8A47-A46A16B48AC3}">
+        <File Id="filSimpleBackupService.Config.dll" KeyPath="yes" Source="..\SimpleBackupService.Config\bin\Release\SimpleBackupService.Config.dll" />
+      </Component>
+      <Component Id="cmpSimpleBackupService.Config.dll.config" Guid="{2CA909D9-93F8-434C-BBB7-5D8B341B1E14}">
+        <File Id="filSimpleBackupService.Config.dll.config" KeyPath="yes" Source="..\SimpleBackupService.Config\bin\Release\SimpleBackupService.Config.dll.config" />
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+  <!--Logging Components-->
+  <Fragment>
+    <ComponentGroup Id="LoggingComponents">
+      <ComponentRef Id="cmplog4net.dll" />
+      <ComponentRef Id="cmpSimpleBackupService.Logging.dll" />
+      <ComponentRef Id="cmpSimpleBackupService.Contracts.dll" />
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <DirectoryRef Id="PLATFORMPROGRAMFILESFOLDER.SIMPLEBACKUPSERVICE">
+      <Component Id="cmplog4net.dll" Guid="{D51F868F-64BA-44C1-90D3-D411D57B615E}">
+        <File Id="filcmplog4net.dll" KeyPath="yes" Source="..\SimpleBackupService.Logging\bin\Release\log4net.dll" />
+      </Component>
+      <Component Id="cmpSimpleBackupService.Logging.dll" Guid="{23EC73CD-AE45-461F-950D-2BBBBC1798B4}">
+        <File Id="filSimpleBackupService.Logging.dll" KeyPath="yes" Source="..\SimpleBackupService.Logging\bin\Release\SimpleBackupService.Logging.dll" />
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+  <!--Control Components-->
+  <Fragment>
+    <ComponentGroup Id="ControlComponents">
+      <ComponentRef Id="cmpSimpleBackupService.Control.exe" />
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <DirectoryRef Id="PLATFORMPROGRAMFILESFOLDER.SIMPLEBACKUPSERVICE">
+      <Component Id="cmpSimpleBackupService.Control.exe" Guid="{2EC258FB-7738-44A6-9F99-5CFD65B653B7}">
+        <File Id="filSimpleBackupService.Control.exe" KeyPath="yes" Source="..\SimpleServiceControl\bin\Release\SimpleBackupService.Control.exe" />
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+  <!--Api Components-->
+  <Fragment>
+    <ComponentGroup Id="ApiComponents">
+      <ComponentRef Id="cmpNewtonsoft.Json.dll" />
+      <ComponentRef Id="cmpSimpleBackupService.WebApi.dll" />
+      <ComponentRef Id="cmpSystem.Net.Http.Formatting.dll" />
+      <ComponentRef Id="cmpSystem.Web.Http.dll" />
+      <ComponentRef Id="cmpSystem.Web.Http.SelfHost.dll" />
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <DirectoryRef Id="PLATFORMPROGRAMFILESFOLDER.SIMPLEBACKUPSERVICE">
+      <Component Id="cmpNewtonsoft.Json.dll" Guid="{5AEB36AB-E6B7-4DB4-A0E0-04F983A519D2}">
+        <File Id="filNewtonsoft.Json.dll" KeyPath="yes" Source="..\SimpleBackupService.WebApi\bin\Release\Newtonsoft.Json.dll" />
+      </Component>
+      <Component Id="cmpSimpleBackupService.WebApi.dll" Guid="{3EF55635-B6D4-48A3-AFF8-A6083134CE3E}">
+        <File Id="filSimpleBackupService.WebApi.dll" KeyPath="yes" Source="..\SimpleBackupService.WebApi\bin\Release\SimpleBackupService.WebApi.dll" />
+      </Component>
+      <Component Id="cmpSystem.Net.Http.Formatting.dll" Guid="{9EC2C2F6-D77C-489D-B3AD-D41AD5442653}">
+        <File Id="filSystem.Net.Http.Formatting.dll" KeyPath="yes" Source="..\SimpleBackupService.WebApi\bin\Release\System.Net.Http.Formatting.dll" />
+      </Component>
+      <Component Id="cmpSystem.Web.Http.dll" Guid="{EE2AFB7F-FD86-4A44-98B4-B359D6F718F0}">
+        <File Id="filSystem.Web.Http.dll" KeyPath="yes" Source="..\SimpleBackupService.WebApi\bin\Release\System.Web.Http.dll" />
+      </Component>
+      <Component Id="cmpSystem.Web.Http.SelfHost.dll" Guid="{78947BA1-E287-438F-A0EB-230D6F9CDF77}">
+        <File Id="filSystem.Web.Http.SelfHost.dll" KeyPath="yes" Source="..\SimpleBackupService.WebApi\bin\Release\System.Web.Http.SelfHost.dll" />
+      </Component>
+    </DirectoryRef>
+  </Fragment>
 </Wix>
