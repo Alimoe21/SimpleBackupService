@@ -94,10 +94,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SimpleBackupService.Config\SimpleBackupService.Config.csproj">
-      <Project>{4275282f-ba8b-4d46-86f0-97b8b2c45da1}</Project>
-      <Name>SimpleBackupService.Config</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SimpleBackupService.Contracts\SimpleBackupService.Contracts.csproj">
       <Project>{57d6fffc-d123-4819-b779-d551898e5070}</Project>
       <Name>SimpleBackupService.Contracts</Name>
