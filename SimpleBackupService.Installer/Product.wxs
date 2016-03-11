@@ -44,7 +44,7 @@
   <Fragment>
     <DirectoryRef Id="PLATFORMPROGRAMFILESFOLDER.SIMPLEBACKUPSERVICE">
       <Component Id="cmpSimpleBackupService.exe" Guid="{E426001A-84BD-456B-9C89-99ABFBB13384}">
-        <File Id="filSimpleBackupService.exe" KeyPath="yes" Source="..\SimpleService\bin\Release\SimpleBackupService.exe" />
+        <File Id="filSimpleBackupService.exe" KeyPath="yes" Source="..\SimpleBackupService\bin\Release\SimpleBackupService.exe" />
         <ServiceInstall Id="ServiceInstaller" Name="SimpleBackupService" DisplayName="SimpleBackupService" Description="Simple Backup Service" Type='ownProcess' Interactive="no" Start='auto' Vital='yes' ErrorControl='ignore' Account="LocalSystem" />
         <ServiceControl Id="StartService" Name="SimpleBackupService" Stop='both' Remove='uninstall' Wait='yes' />
       </Component>
@@ -97,7 +97,7 @@
   <Fragment>
     <DirectoryRef Id="PLATFORMPROGRAMFILESFOLDER.SIMPLEBACKUPSERVICE">
       <Component Id="cmpSimpleBackupService.Control.exe" Guid="{2EC258FB-7738-44A6-9F99-5CFD65B653B7}">
-        <File Id="filSimpleBackupService.Control.exe" KeyPath="yes" Source="..\SimpleServiceControl\bin\Release\SimpleBackupService.Control.exe" />
+        <File Id="filSimpleBackupService.Control.exe" KeyPath="yes" Source="..\SimpleBackupService.Control\bin\Release\SimpleBackupService.Control.exe" />
       </Component>
     </DirectoryRef>
   </Fragment>
