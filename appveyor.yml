@@ -1,1 +1,8 @@
 version: 1.0.{build}
+configuration: Release
+build:
+  project: SimpleBackupService.sln
+  parallel: true
+  verbosity: minimal
+artifacts:
+- path: SimpleBackupService.Installer\bin\Release\*.msi
