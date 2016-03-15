@@ -15,10 +15,12 @@ namespace SimpleBackupService.WebApi
     {
         private readonly HttpSelfHostServer _server;
         private readonly WebApiConfig _config;
+        private readonly WebApiLog _log;
 
         public BackupWebApi ( )
         {
             _config = new WebApiConfig();
+            _log = new WebApiLog();
             var configuration = new HttpSelfHostConfiguration (_config.WebApiUrl);
 
             configuration.Routes.MapHttpRoute (
@@ -32,17 +34,24 @@ namespace SimpleBackupService.WebApi
 
         public void Start ( )
         {
+            _log.Debug ( "Starting WebApi at URL '{0}'.", _config.WebApiUrl );
             _server?.OpenAsync ( ).Start ( );
         }
 
         public void Stop ( )
         {
             _server?.CloseAsync ( ).Wait ( );
+            _log.Debug("Stoping WebApi.");
         }
 
         public void Dispose ( )
         {
             _server?.CloseAsync ( ).Wait ( );
+        }
+
+        public void InitWebApi ( IBackupService service )
+        {
+            throw new NotImplementedException ( );
         }
     }
 }

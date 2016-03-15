@@ -60,6 +60,7 @@
     <Compile Include="BackupWebApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebApiConfig.cs" />
+    <Compile Include="WebApiLog.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="IBackupConfig.cs" />
     <Compile Include="IBackupLogging.cs" />
+    <Compile Include="IBackupService.cs" />
     <Compile Include="IBackupWebApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

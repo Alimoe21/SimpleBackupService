@@ -11,9 +11,14 @@ namespace SimpleBackupService
             this._backupLogging = backupLogging;
         }
 
-        public void LogDebug ( string message, params object [ ] d )
+        public void Debug ( string message, params object [ ] args )
         {
-            _backupLogging?.LogDebug(message, d);
+            _backupLogging?.Debug(message, args);
+        }
+
+        public void Info ( string message, params object [ ] args )
+        {
+            _backupLogging?.Info(message, args);
         }
     }
 }

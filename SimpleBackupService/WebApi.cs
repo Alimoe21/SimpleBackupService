@@ -20,5 +20,10 @@ namespace SimpleBackupService
         {
             _webApi?.Dispose();
         }
+
+        public void InitWebApi ( IBackupService service )
+        {
+            _webApi?.InitWebApi(service);
+        }
     }
 }

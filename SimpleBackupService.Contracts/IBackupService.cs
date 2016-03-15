@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace SimpleBackupService.Contracts
 {
-    public interface IBackupWebApi : IDisposable
+    public interface IBackupService
     {
-        void InitWebApi ( IBackupService service );
     }
 }

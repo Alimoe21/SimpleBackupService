@@ -8,6 +8,7 @@ namespace SimpleBackupService.Contracts
 {
     public interface IBackupLogging
     {
-        void LogDebug ( string message, params object [ ] d );
+        void Debug ( string message, params object [ ] args );
+        void Info ( string message, params object [ ] args );
     }
 }

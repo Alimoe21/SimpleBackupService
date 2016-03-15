@@ -76,6 +76,7 @@
       <ComponentRef Id="cmplog4net.dll" />
       <ComponentRef Id="cmpSimpleBackupService.Logging.dll" />
       <ComponentRef Id="cmpSimpleBackupService.Contracts.dll" />
+      <ComponentRef Id="cmpSimpleBackupService.Logging.dll.config" />
     </ComponentGroup>
   </Fragment>
   <Fragment>
@@ -85,6 +86,9 @@
       </Component>
       <Component Id="cmpSimpleBackupService.Logging.dll" Guid="{23EC73CD-AE45-461F-950D-2BBBBC1798B4}">
         <File Id="filSimpleBackupService.Logging.dll" KeyPath="yes" Source="..\SimpleBackupService.Logging\bin\Release\SimpleBackupService.Logging.dll" />
+      </Component>
+      <Component Id="cmpSimpleBackupService.Logging.dll.config" Guid="{331D6E6B-52E7-4860-98AC-02110FB5A33D}">
+        <File Id="filSimpleBackupService.Logging.dll.config" KeyPath="yes" Source="..\SimpleBackupService.Logging\bin\Release\SimpleBackupService.Logging.dll.config" />
       </Component>
     </DirectoryRef>
   </Fragment>
