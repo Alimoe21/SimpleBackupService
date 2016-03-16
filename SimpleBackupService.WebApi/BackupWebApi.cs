@@ -16,6 +16,7 @@ namespace SimpleBackupService.WebApi
         private readonly HttpSelfHostServer _server;
         private readonly WebApiConfig _config;
         private readonly WebApiLog _log;
+        private IBackupService _service;
 
         public BackupWebApi ( )
         {
@@ -46,12 +47,13 @@ namespace SimpleBackupService.WebApi
 
         public void Dispose ( )
         {
+            _service = null;
             _server?.CloseAsync ( ).Wait ( );
         }
 
         public void InitWebApi ( IBackupService service )
         {
-            throw new NotImplementedException ( );
+            _service = service;
         }
     }
 }
