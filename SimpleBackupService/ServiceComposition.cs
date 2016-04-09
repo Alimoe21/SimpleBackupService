@@ -30,7 +30,10 @@ namespace SimpleBackupService
 
                 EventLog.WriteEntry("SimpleBackupService", message.ToString());
             }
-            catch { }
+            catch (Exception ex)
+            {
+                EventLog.WriteEntry("SimpleBackupService", "Exception during compisition. " + ex.Message);
+            }
         }
     }
 }

@@ -71,53 +71,59 @@ namespace SimpleBackupService
         private void Observer_DriveConnected(object sender, DriveConnectedEventArgs e)
         {
             Log.Info("New Drive connected: {0}", e.Drive?.Name);
-            if ( e.Drive != null && e.Drive.IsReady)
+            for (int i = 0; i < 10; i++)
             {
-                var backupTask = new Task( ( ) =>
+                if (e.Drive != null && e.Drive.IsReady)
                 {
-                    Log.Debug("Starting Backup Task");
-                    var backupScripts = e.Drive.RootDirectory.GetFiles(Config.BackupScriptName);
-                    if (backupScripts.Length > 0)
+                    var backupTask = new Task(() =>
                     {
-                        var backupProcess = new Process
+                        Log.Debug("Starting Backup Task");
+                        var backupScripts = e.Drive.RootDirectory.GetFiles(Config.BackupScriptName);
+                        if (backupScripts.Length > 0)
                         {
-                            StartInfo = new ProcessStartInfo ( "cmd.exe" )
+                            var backupProcess = new Process
                             {
-                                WorkingDirectory = e.Drive.RootDirectory.FullName,
-                                UseShellExecute = false,
-                                RedirectStandardOutput = true,
-                                RedirectStandardInput = true
-                            }
-                        };
-                        try
-                        {
-                            backupProcess.Start ( );
-                            backupProcess.StandardInput.WriteLine ( backupScripts [ 0 ].FullName );
-                            backupProcess.StandardInput.WriteLine ( "exit" );
+                                StartInfo = new ProcessStartInfo("cmd.exe")
+                                {
+                                    WorkingDirectory = e.Drive.RootDirectory.FullName,
+                                    UseShellExecute = false,
+                                    RedirectStandardOutput = true,
+                                    RedirectStandardInput = true
+                                }
+                            };
+                            try
+                            {
+                                backupProcess.Start();
+                                backupProcess.StandardInput.WriteLine(backupScripts[0].FullName);
+                                backupProcess.StandardInput.WriteLine("exit");
 
-                            backupProcess.WaitForExit ( );
+                                backupProcess.WaitForExit();
+                            }
+                            catch (Exception ex)
+                            {
+                                Log.Info("Backup failed with exception: {0}", ex.Message);
+                            }
+                            finally
+                            {
+                                Log.Debug($"Backupprocess exited with Code {backupProcess.ExitCode}.\n Output:\n{backupProcess.StandardOutput.ReadToEnd()}");
+                            }
+                            backupProcess.Dispose();
                         }
-                        catch ( Exception ex )
+                        else
                         {
-                            Log.Info ( "Backup failed with exception: {0}", ex.Message );
+                            Log.Debug("No backup script found.");
                         }
-                        finally
-                        {
-                            Log.Debug($"Backupprocess exited with Code {backupProcess.ExitCode}.\n Output:\n{backupProcess.StandardOutput.ReadToEnd()}");
-                        }
-                        backupProcess.Dispose();
-                    }
-                    else
-                    {
-                        Log.Debug("No backup script found.");
-                    }
-                });
-                backupTask.Start();
+                    });
+                    backupTask.Start();
+                    break;
+                }
+                else
+                {
+                    Log.Debug("Drive was not ready! Waiting 30s (Try: {0})", i);
+                    Task.Delay(TimeSpan.FromSeconds(30)).Wait();
+                }
             }
-            else
-            {
-                Log.Debug("Drive was not ready!");
-            }
+            
         }
     }
 }
