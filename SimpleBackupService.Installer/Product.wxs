@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="SimpleBackupService" Language="1033" Version="1.0.0.0" Manufacturer="Pascal Schumann" UpgradeCode="00316c84-6e2c-4c4a-8655-42a9ced464e1">
+	<Product Id="*" Name="SimpleBackupService" Language="1033" Version="!(bind.FileVersion.filSimpleBackupService.exe)" Manufacturer="Pascal Schumann" UpgradeCode="00316c84-6e2c-4c4a-8655-42a9ced464e1">
 		<Package InstallerVersion="200" Compressed="yes" />
 
 		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
@@ -21,6 +21,8 @@
         <ComponentGroupRef Id="ApiComponents" />
       </Feature>
 		</Feature>
+    
+    
     
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
